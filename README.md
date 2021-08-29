@@ -76,3 +76,22 @@ Promise.resolve = function (value) {
 
 
 
+## 核心难点——封装prototype.then()
+
+> 步骤:
+>
+> 1. 返回 new Promise
+>
+> 2. 根据当前pending状态, 指定onResolved/onRejected回调 或 存入回调数组中
+>
+>    1. 'pending':  存入onResolved和onRejected
+>
+>    2. 'rejected': 
+>
+>       
+>
+>    3. 'resolved':  返回的Promise结果 由 onResolved/onRejected执行结果决定
+>
+>       1. 抛出异常
+>       2. 返回Promise, 结果就是当前这个执行结果
+>       3. 返回非Promise值, 成功

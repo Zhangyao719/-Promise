@@ -51,5 +51,28 @@ Promise
 >2. 存储接收的数据`PromiseResult`
 >3. 如果.then()或.catch()有传异步回调进来, 那就要在返回Promise对象后去执行(settimeout开启新的进程)
 
+```js
+// 1. 返回的还是Promise
+// 2. 走处理失败的reject方法(包含拒绝的原因)
+Promise.reject = function (error) {
+    return new Promise((resolve, reject) => {
+        reject(error)
+    })
+};
+
+// 1. 返回的还是Promise
+// 2. value 本身也是一个Promise, 走.then
+// 3. value 是一个除Promise外的其他类型, 走resolve
+Promise.resolve = function (value) {
+    return new Promise((resolve, reject) => {
+        if (value instanceof Promise) {
+            value.then(resolve, reject);
+        } else {
+            resolve(value);
+        }
+    });
+};
+```
+
 
 

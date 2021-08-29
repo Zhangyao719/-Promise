@@ -8,7 +8,7 @@
 
 | 常用方法                                                     | 说明                                                         |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| executor(resolve, reject)                                    | 执行器, 包含resolve和reject两个回调函数                      |
+| executor(resolve, reject)                                    | 执行器, Promise的参数, 包含resolve和reject两个回调函数       |
 | resolve                                                      | executor的回调, 接收成功的数据                               |
 | reject                                                       | executor的回调,接收失败的数据                                |
 | [.then(onResolved, onRejected)](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/then) | Promise原型链上的方法,返回Promise, 处理成功和失败情况        |
@@ -31,8 +31,8 @@ Promise
 ├── reject()
 ├
 ├── 原型方法 ↓
-├── Promise.property.then(onResolved, onRejected)
-├── Promise.property.catch(onRejected)
+├── Promise.prototype.then(onResolved, onRejected)
+├── Promise.prototype.catch(onRejected)
 ├
 ├── 静态方法 ↓
 ├── Promise.all()
@@ -45,6 +45,8 @@ Promise
 
 ## 封装resolve和reject方法
 
+>特点:
+>
 >1. Promise的`PromiseState`状态属性只能被修改一次
 >2. 存储接收的数据`PromiseResult`
 >3. 如果.then()或.catch()有传异步回调进来, 那就要在返回Promise对象后去执行(settimeout开启新的进程)

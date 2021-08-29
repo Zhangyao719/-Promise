@@ -80,18 +80,24 @@ Promise.resolve = function (value) {
 
 > 步骤:
 >
-> 1. 返回 new Promise
+> ​	**step1:** 返回一个Promise实例
 >
-> 2. 根据当前pending状态, 指定onResolved/onRejected回调 或 存入回调数组中
+> ​	**step2: **根据Promise的pending状态, 先保存onResolved和onRejectd, 再执行
 >
->    1. 'pending':  存入onResolved和onRejected
+> ​			(2.1) 'pending': 存入onResolved和onRejectd
 >
->    2. 'rejected': 
+> ​			(2.2) 'rejected': 执行onRejectd
 >
->       
+> ​			(2.3) 'resolved': 执行onResolved
 >
->    3. 'resolved':  返回的Promise结果 由 onResolved/onRejected执行结果决定
+> ↓↓↓ 为确保能够一直.then链式调用下去(让下一次的.then始终能拿到上一次的结果), 我们要对上一次回调执行得到的结果进行处理
 >
->       1. 抛出异常
->       2. 返回Promise, 结果就是当前这个执行结果
->       3. 返回非Promise值, 成功
+> ​	**step3:** 处理 执行onResolved或onRejectd得到的结果:
+>
+> ​			(3.1) 结果是异常				→	reject(error)
+>
+> ​			(3.2) 结果是promise		→	取出这个promise的结果, 当做当前这个return new Promise的结果
+>
+> ​			(3.3) 结果是非promise	→	resolved(data)
+>
+> 

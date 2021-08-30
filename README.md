@@ -99,5 +99,49 @@ Promise.resolve = function (value) {
 > ​			(3.2) 结果是promise		→	取出这个promise的结果, 当做当前这个return new Promise的结果
 >
 > ​			(3.3) 结果是非promise	→	resolved(data)
->
-> 
+
+![使用结构图](.\assets\Snipaste_2021-08-30_22-28-51.jpg)
+
+```js
+Promise.prototype.then = function (onResolved, onRejected) {
+    const _this = this;
+    // step 1:
+    return new Promise(function (resolve, reject) {
+        // 检查参数, 两个参数必须都是函数: (形参data/error 其实都是_this.PromiseResult的结果)
+        onResolved = typeof onResolved === 'function' ? onResolved : data => data;
+        onRejected = typeof onRejected === 'function' ? onRejected : error => { throw error;}
+
+        // step 3(可以提取成公共处理步骤):
+        function handle(callback) {
+            try {
+                const res = callback(_this.PromiseResult);
+                if (res instanceof Promise) {
+                    res.then(resolve, reject); // step 3.2
+                    // res.then((data) => resolve(data), (error) => reject(error)); // 写法同上
+                } else {
+                    resolve(res); // step 3.3
+                }
+            } catch (error) {
+                reject(error); // step 3.1
+            }
+        }
+
+        // step 2:
+        if (_this.PromiseState === RESOLVED) {
+            setTimeout(() => { handle(onResolved)});
+        } else if (_this.PromiseState === REJECTED) {
+            setTimeout(() => { handle(onRejected)});
+        } else {
+            _this.callbacks.push({
+				onResolved() {
+					handle(onResolved);
+				},
+                onRejected() {
+                    handle(onRejected);
+                },
+            })
+        }
+    })
+};
+```
+

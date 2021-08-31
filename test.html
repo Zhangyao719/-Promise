@@ -12,12 +12,18 @@
     const p = new Promise((resolve, reject) => {
       const time = Date.now();
       if (time % 2 === 1) {
-        resolve(time)
+        // resolve(time)
+        Promise.resolve(time);
       } else {
-        reject(time)
+        // reject(time)
+        Promise.reject(time);
       }
+    });
+    p.then((data) => {
+      console.log('onResolved', data);
+    }).catch((error) => {
+      console.log('onRejected', error);
     })
-    console.log(p);
   </script>
 </body>
 </html>

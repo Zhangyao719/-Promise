@@ -143,5 +143,10 @@ Promise.prototype.then = function (onResolved, onRejected) {
         }
     })
 };
+
+// .then封装完, .catch就可以直接使用了:
+Promise.prototype.catch = function (onRejected) {
+    return this.then(undefined, onRejected)
+};
 ```
 

@@ -122,7 +122,7 @@ function Promise(executor) {
 >
 > ​			(3.3) 结果是非promise	→	resolved(data)
 
-![使用结构图](.\assets\Snipaste_2021-08-30_22-28-51.jpg)
+![使用结构图](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e8bd3b3e395e42baab854554985d1614~tplv-k3u1fbpfcp-watermark.image)
 
 ```js
 Promise.prototype.then = function (onResolved, onRejected) {

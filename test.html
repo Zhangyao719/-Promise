@@ -25,14 +25,29 @@
       //   console.log('onRejected', error);
       // })
       // const promise1 = Promise.resolve(123)
-      const promise1 = new Promise((resolve) => {
-        resolve(123)
-      })
-      console.log(promise1)
-      promise1.then((value) => {
-        console.log(value)
-        // expected output: 123
-      })
+
+      // const promise1 = new Promise((resolve) => {
+      //   resolve(123)
+      // })
+      // console.log(promise1)
+      // promise1.then((value) => {
+      //   console.log(value)
+      //   // expected output: 123
+      // })
+
+      const p = Promise.all([
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(123)
+          }, 100);
+        }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            reject(456)
+          }, 200);
+        }),
+      ])
+      console.log(p);
     </script>
   </body>
 </html>

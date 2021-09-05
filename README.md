@@ -212,3 +212,25 @@ Promise.all = function (promiseList) {
 };
 ```
 
+## promise.race
+
+>**特点**:
+>
+>1. 返回Promise实例
+>2. 返回第一个成功或失败的promise
+
+```js
+Promise.race = function (promiseList) {
+    return new Promise((resolve, reject) => {
+        promiseList.forEach((p, index) => {
+            // 考虑到p可能不是一个promise
+            Promise.resolve(p).then(
+                data => resolve(data),
+                // 失败就返回第一个失败的结果
+                error => reject(error)
+            )
+        });
+    });
+};
+```
+

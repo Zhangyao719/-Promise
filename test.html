@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script src="./lib/Promise-es5.js"></script>
-</head>
-<body>
-  <script>
-    const p = new Promise((resolve, reject) => {
-      const time = Date.now();
-      if (time % 2 === 1) {
-        // resolve(time)
-        Promise.resolve(time);
-      } else {
-        // reject(time)
-        Promise.reject(time);
-      }
-    });
-    p.then((data) => {
-      console.log('onResolved', data);
-    }).catch((error) => {
-      console.log('onRejected', error);
-    })
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./lib/Promise-es5.js"></script>
+  </head>
+  <body>
+    <script>
+      // const p = new Promise((resolve, reject) => {
+      //   const time = Date.now();
+      //   if (time % 2 === 1) {
+      //     // resolve(time)
+      //     Promise.resolve(time);
+      //   } else {
+      //     // reject(time)
+      //     Promise.reject(time);
+      //   }
+      // });
+      // p.then((data) => {
+      //   console.log('onResolved', data);
+      // }).catch((error) => {
+      //   console.log('onRejected', error);
+      // })
+      // const promise1 = Promise.resolve(123)
+      const promise1 = new Promise((resolve) => {
+        resolve(123)
+      })
+      console.log(promise1)
+      promise1.then((value) => {
+        console.log(value)
+        // expected output: 123
+      })
+    </script>
+  </body>
 </html>

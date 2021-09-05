@@ -150,3 +150,32 @@ Promise.prototype.catch = function (onRejected) {
 };
 ```
 
+## Promise.resolve和Promise.reject
+
+>**Promise.resolve**:
+>
+>返回一个以给定值(resolve的参数)解析后的Promise
+>
+>1. 如果resolve的参数是一个promise,  则返回这个Promise
+>2. 如果resolve的参数是一个非promise, (比如固定值, Promise.resolve(1) ), 则返回带有这个值的Promise
+
+```js
+Promise.resolve = function (value) {
+    return new Promise((resolve, reject) => {
+        // 1. value 本身也是一个Promise, 走.then, 用resolve或reject去接收value的结果
+        if (value instanceof Promise) {
+            value.then(resolve, reject);
+        } else {
+            // 2. value 是一个除Promise外的其他类型, 走resolve
+            resolve(value);
+        }
+    });
+};
+// reject就直接用reject去接收就可以了
+Promise.reject = function (error) {
+    return new Promise((resolve, reject) => {
+        reject(error)
+    })
+};
+```
+

@@ -179,3 +179,36 @@ Promise.reject = function (error) {
 };
 ```
 
+## Promise.all
+
+>特点:
+>
+>1. 接收一个promise数组, 只返回一个Promise实例, 结果是一个数组
+>2. 结果的顺序不能变
+>3. 只有所有的promise都成功, 才返回成果的结果, 否则将返回第一个失败的结果
+
+```js
+Promise.all = function (promiseList) {
+    const dataList = new Array(promiseList.length);
+    let successCount = 0;
+    return new Promise((resolve, reject) => {
+        promiseList.forEach((p, index) => {
+            // 考虑到p可能不是一个promise
+            Promise.resolve(p).then(
+                data => {
+                    // 数据顺序需要保持一致
+                    dataList[index] = data;
+                    successCount++;
+                    // 检查是否全部成功
+                    if (successCount === promiseList.length) {
+                        resolve(dataList);
+                    }
+                },
+                // 失败就返回第一个失败的结果
+                error => reject(error)
+            )
+        });
+    });
+};
+```
+

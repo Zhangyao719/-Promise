@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="./lib/Promise-es5.js"></script>
+    <script src="./lib/Promise-class.js"></script>
   </head>
   <body>
     <script>
@@ -35,19 +35,17 @@
       //   // expected output: 123
       // })
 
-      const p = Promise.all([
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve(123)
-          }, 100);
-        }),
-        new Promise((resolve, reject) => {
-          setTimeout(() => {
-            reject(456)
-          }, 200);
-        }),
-      ])
-      console.log(p);
+      const p1 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(123);
+        }, 100);
+      })
+      const p2 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject(456);
+        }, 200);
+      })
+      console.log(Promise.all([p1, p2]))
     </script>
   </body>
 </html>
